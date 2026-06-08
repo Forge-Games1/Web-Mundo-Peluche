@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!--
+    viewport: hace que la página se vea bien en celulares.
+    Sin esta línea, el celular mostraría la página muy pequeña.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundo Peluche 🧸</title>
+
+  <!--
+    Google Fonts: cargamos dos fuentes desde internet.
+    - "Nunito": redondeada y amigable, perfecta para un negocio de peluches.
+    - "Pacifico": cursiva y divertida, usada solo en el logo.
+    Si no tienes internet al abrir la página, usará fuentes del sistema.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Vinculamos nuestro archivo de estilos -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =============================================
+       CURSOR PERSONALIZADO
+       Un pequeño corazón que sigue al mouse.
+       JavaScript lo mueve en tiempo real.
+  ============================================= -->
+  <div class="cursor" id="cursor">🧸</div>
+
+  <!-- =============================================
+       PARTÍCULAS DE FONDO
+       Círculos flotantes decorativos.
+       JavaScript los crea y anima.
+  ============================================= -->
+  <div class="particles" id="particles"></div>
+
+
+  <!-- =============================================
+       ENCABEZADO / HEADER
+       Contiene el logo y el menú de navegación.
+       Se queda fijo arriba al hacer scroll.
+  ============================================= -->
+  <header class="header" id="header">
+
+    <!-- Logo del negocio -->
+    <!-- Para cambiar el nombre: modifica el texto dentro de <span class="logo-nombre"> -->
+    <div class="logo">
+      <span class="logo-emoji">🧸</span>
+      <span class="logo-nombre">Mundo Peluche</span>
+    </div>
+
+    <!-- Menú de navegación para escritorio -->
+    <nav class="nav" id="nav">
+      <!-- Cada enlace lleva a una sección de la página usando el id como ancla (#) -->
+      <a href="#inicio"    class="nav-link">Inicio</a>
+      <a href="#productos" class="nav-link">Productos</a>
+      <a href="#nosotros"  class="nav-link">Nosotros</a>
+      <a href="#contacto"  class="nav-link btn-whatsapp">WhatsApp</a>
+    </nav>
+
+    <!-- Botón hamburguesa: solo visible en celular -->
+    <!-- Las 3 líneas (<span>) representan el ícono de las 3 rayas -->
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </header>
+
+
+  <!-- =============================================
+       SECCIÓN HERO (Pantalla de bienvenida)
+       Lo primero que el visitante ve.
+       Contiene el título, descripción y botón principal.
+  ============================================= -->
+  <section class="hero" id="inicio">
+
+    <!-- Columna izquierda: el texto principal -->
+    <div class="hero-texto">
+
+      <!-- Etiqueta pequeña animada arriba del título -->
+      <div class="hero-badge">✨ Hechos con amor</div>
+
+      <!--
+        Título principal.
+        La clase "reveal" hace que aparezca con animación al cargar.
+        Para cambiar el texto: edita lo que está entre las etiquetas <h1>.
+      -->
+      <h1 class="hero-titulo reveal">
+        Peluches que<br />
+        <span class="titulo-acento">abrazan</span><br />
+        el corazón 🤍
+      </h1>
+
+      <!-- Descripción breve del negocio -->
+      <p class="hero-desc reveal">
+        En <strong>Mundo Peluche</strong> creamos y vendemos peluches únicos,
+        suaves y llenos de ternura. El regalo perfecto para todas las edades,
+        desde bebés hasta adultos que merecen un abrazo esponjoso.
+      </p>
+
+      <!-- Botones de acción principal -->
+      <div class="hero-botones reveal">
+        <!-- Botón para ver productos: lleva a la sección #productos -->
+        <a href="#productos" class="btn btn-principal">Ver productos 🛍️</a>
+
+        <!--
+          Botón de WhatsApp.
+          Para personalizar: cambia el número "521XXXXXXXXXX" por el número real.
+          El texto después de "?text=" es el mensaje predefinido (codificado en URL).
+        -->
+        <a
+          href="https://wa.me/4152819807?text=Hola!%20Quiero%20info%20sobre%20sus%20peluches%20🧸"
+          target="_blank"
+          class="btn btn-whatsapp-hero"
+        >
+          💬 Contactar
+        </a>
+      </div>
+
+      <!-- Estadísticas rápidas del negocio -->
+      <div class="hero-stats">
+        <div class="stat">
+          <!-- data-target: el número hasta donde animará el contador (JS lo lee) -->
+          <strong class="contador" data-target="500">0</strong>
+          <span>Clientes felices</span>
+        </div>
+        <div class="stat">
+          <strong class="contador" data-target="80">0</strong>
+          <span>Modelos únicos</span>
+        </div>
+        <div class="stat">
+          <strong class="contador" data-target="5">0</strong>
+          <span>Años regalando amor</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columna derecha: imagen visual / decoración -->
+    <div class="hero-visual">
+      <div class="hero-blob">
+        <!-- Emoji gigante como elemento visual principal -->
+        <!-- Para poner una imagen real: reemplaza esto por <img src="tu-foto.jpg" alt="peluche"> -->
+        <span class="hero-emoji-grande">🧸</span>
+        <!-- Emojis flotantes decorativos alrededor -->
+        <span class="flotante f1">💛</span>
+        <span class="flotante f2">⭐</span>
+        <span class="flotante f3">🌸</span>
+        <span class="flotante f4">🤍</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+       SECCIÓN PRODUCTOS
+       Muestra las categorías o productos destacados.
+       Las tarjetas se generan con JavaScript.
+  ============================================= -->
+  <section class="seccion productos-seccion" id="productos">
+
+    <!-- Encabezado de la sección -->
+    <div class="seccion-header">
+      <p class="seccion-tag">🛒 Lo que ofrecemos</p>
+      <h2 class="seccion-titulo">Nuestros <span class="titulo-acento">Peluches</span></h2>
+      <p class="seccion-subtitulo">
+        Cada peluche es especial, suave y hecho con los mejores materiales.
+      </p>
+    </div>
+
+    <!--
+      Contenedor donde JavaScript insertará las tarjetas de productos.
+      No necesitas escribir las tarjetas a mano aquí.
+      Solo edita el array "productos" en script.js.
+    -->
+    <div class="productos-grid" id="productosGrid"></div>
+
+  </section>
+
+
+  <!-- =============================================
+       SECCIÓN NOSOTROS
+       Historia y valores del negocio.
+  ============================================= -->
+  <section class="seccion nosotros-seccion" id="nosotros">
+
+    <!-- Lado izquierdo: imagen / decoración -->
+    <div class="nosotros-visual">
+      <div class="nosotros-foto">
+        <!--
+          Para poner una foto real del negocio:
+          Reemplaza este div por: <img src="foto-tienda.jpg" alt="Nuestra tienda" />
+        -->
+        <span class="nosotros-emoji">🏠</span>
+        <p>Tu foto aquí</p>
+      </div>
+      <!-- Tarjeta flotante con un dato llamativo -->
+      <div class="nosotros-badge-flotante">
+        <span>🌟</span>
+        <div>
+          <strong>100% Seguros</strong>
+          <small>Aptos para bebés</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado derecho: texto -->
+    <div class="nosotros-texto">
+      <p class="seccion-tag">💛 Nuestra historia</p>
+      <h2 class="seccion-titulo">Amor desde el <span class="titulo-acento">primer puntada</span></h2>
+      <p class="nosotros-parrafo">
+        Somos una pequeña tienda familiar que nació del amor por los peluches artesanales.
+        Llevamos 5 años creando compañeros de peluche que se convierten en parte
+        de la familia de nuestros clientes.
+      </p>
+      <p class="nosotros-parrafo">
+        Cada peluche pasa por un control de calidad, está hecho con relleno
+        hipoalergénico y materiales certificados seguros para niños.
+      </p>
+
+      <!-- Íconos de valores del negocio -->
+      <!-- Para cambiar los valores: edita el texto dentro de cada <div class="valor"> -->
+      <div class="valores">
+        <div class="valor"><span>🧵</span><p>Hecho a mano</p></div>
+        <div class="valor"><span>💚</span><p>Materiales seguros</p></div>
+        <div class="valor"><span>🚀</span><p>Envíos rápidos</p></div>
+        <div class="valor"><span>🔄</span><p>Cambios y devoluciones</p></div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+       SECCIÓN CONTACTO / CTA (Call To Action)
+       Invita al usuario a contactar por WhatsApp.
+  ============================================= -->
+  <section class="seccion cta-seccion" id="contacto">
+
+    <div class="cta-contenido">
+      <p class="cta-emoji">🧸</p>
+      <h2 class="cta-titulo">¿Listo para adoptar<br />tu peluche?</h2>
+      <p class="cta-desc">
+        Escríbenos por WhatsApp y te asesoramos para encontrar
+        el peluche perfecto. ¡Respondemos en minutos!
+      </p>
+      <!--
+        Botón principal de WhatsApp.
+        Cambia el número y el texto del mensaje según el negocio.
+      -->
+      <a
+        href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Me%20interesa%20un%20peluche%20%F0%9F%A7%B8"
+        target="_blank"
+        class="btn btn-cta-whatsapp"
+      >
+        <span class="whatsapp-icon">💬</span>
+        Escríbenos en WhatsApp
+      </a>
+
+      <!-- Datos de contacto adicionales -->
+      <div class="contacto-extras">
+        <!-- Para cambiar: edita el texto de cada <span> -->
+        <span>📍 Ciudad de México</span>
+        <span>🕐 Lun–Sáb 9am–7pm</span>
+        <span>📦 Envíos a todo el país</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+       PIE DE PÁGINA / FOOTER
+  ============================================= -->
+  <footer class="footer">
+    <p>🧸 <span class="logo-nombre">Mundo Peluche</span> © 2025 — Todos los derechos reservados.</p>
+    <p class="footer-sub">Hecho con 💛 para los que creen en los abrazos de peluche.</p>
+  </footer>
+
+
+  <!-- =============================================
+       BOTÓN VOLVER ARRIBA
+       Aparece cuando el usuario baja en la página.
+       JavaScript controla cuándo es visible.
+  ============================================= -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver al inicio">↑</button>
+
+
+  <!-- Vinculamos nuestro archivo de JavaScript (siempre AL FINAL del body) -->
+  <script src="script.js"></script>
+
+</body>
+</html>

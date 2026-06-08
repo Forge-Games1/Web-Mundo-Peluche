@@ -1,0 +1,822 @@
+/* ================================================
+   MUNDO PELUCHE — Estilos
+   Archivo: style.css
+   ================================================
+
+   ÍNDICE:
+   1.  Variables y Reset Global
+   2.  Cursor personalizado
+   3.  Partículas de fondo
+   4.  Header / Navbar
+   5.  Menú hamburguesa (celular)
+   6.  Sección Hero
+   7.  Sección Productos
+   8.  Sección Nosotros
+   9.  Sección CTA / Contacto
+   10. Footer
+   11. Botón Scroll Top
+   12. Animaciones
+   13. Responsive (celular)
+================================================ */
+
+
+/* ---- 1. VARIABLES Y RESET GLOBAL ---- */
+/*
+  :root es donde definimos las "variables CSS".
+  Una variable CSS empieza con -- y guarda un valor.
+  Puedes usarla en cualquier parte con var(--nombre).
+
+  PARA CAMBIAR COLORES: solo edita los valores aquí abajo
+  y el cambio afectará a toda la página automáticamente.
+*/
+:root {
+  /* --- Paleta de colores oscura --- */
+  --fondo-oscuro:    #0e0b14;   /* Fondo principal (morado muy oscuro) */
+  --fondo-medio:     #16112a;   /* Fondo de secciones alternas */
+  --fondo-tarjeta:   #1e1535;   /* Fondo de tarjetas y elementos flotantes */
+  --borde:           #2e2550;   /* Color de los bordes */
+
+  /* --- Colores de acento --- */
+  --acento:          #f0a500;   /* Amarillo dorado — color principal de acento */
+  --acento-hover:    #e09000;   /* Versión más oscura para hover */
+  --acento-suave:    rgba(240, 165, 0, 0.12); /* Versión muy transparente */
+  --rosa:            #ff7eb3;   /* Rosa secundario */
+  --verde-wa:        #25d366;   /* Verde de WhatsApp */
+  --verde-wa-hover:  #1da851;
+
+  /* --- Textos --- */
+  --texto-claro:     #f5f0ff;   /* Texto principal */
+  --texto-muted:     #8a7faa;   /* Texto secundario / gris */
+
+  /* --- Tipografías --- */
+  --fuente-titulo:   'Pacifico', cursive;   /* Para el logo */
+  --fuente-cuerpo:   'Nunito', sans-serif;  /* Para todo lo demás */
+
+  /* --- Otros --- */
+  --radio:           16px;                            /* Redondeo de esquinas */
+  --sombra:          0 10px 40px rgba(0, 0, 0, 0.4); /* Sombra estándar */
+  --transicion:      0.3s ease;                       /* Velocidad de transiciones */
+}
+
+/* Reset: quita estilos por defecto del navegador */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* El padding no agranda los elementos */
+}
+
+html {
+  scroll-behavior: smooth; /* Desplazamiento suave al hacer click en links */
+}
+
+body {
+  background-color: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  font-family: var(--fuente-cuerpo);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden; /* Evita scroll horizontal accidental */
+}
+
+/* Clase reutilizable para aplicar el color acento */
+.titulo-acento {
+  color: var(--acento);
+}
+
+/* Imágenes responsive por defecto */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---- 2. CURSOR PERSONALIZADO ---- */
+/*
+  Reemplazamos el cursor normal del mouse por un emoji de peluche.
+  JavaScript mueve este elemento siguiendo al mouse.
+*/
+.cursor {
+  position: fixed;       /* Fijo en la pantalla, no en la página */
+  pointer-events: none;  /* No interfiere con clicks */
+  font-size: 1.2rem;
+  z-index: 9999;         /* Encima de todo */
+  transform: translate(-50%, -50%); /* Centra el emoji en el cursor */
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+
+/* ---- 3. PARTÍCULAS DE FONDO ---- */
+/*
+  Puntos brillantes que flotan en el fondo.
+  JavaScript crea los elementos, CSS los anima.
+*/
+.particles {
+  position: fixed;
+  inset: 0;              /* shorthand de top/right/bottom/left: 0 */
+  pointer-events: none;  /* No bloquea clicks */
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Cada partícula individual (creada por JS) */
+.particle {
+  position: absolute;
+  border-radius: 50%;    /* Círculo perfecto */
+  background: var(--acento);
+  opacity: 0;
+  animation: flotar var(--duracion, 8s) var(--delay, 0s) infinite ease-in-out;
+}
+
+/* Animación de las partículas: suben y bajan con opacidad */
+@keyframes flotar {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 0.3; }
+  90%  { opacity: 0.1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+
+/* ---- 4. HEADER / NAVBAR ---- */
+.header {
+  position: fixed;       /* Se queda arriba al hacer scroll */
+  top: 0; left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 6%;
+  z-index: 100;
+  transition: background var(--transicion), box-shadow var(--transicion);
+}
+
+/*
+  La clase .scrolled se agrega con JavaScript cuando el usuario
+  baja más de 50px. Hace el header más opaco con fondo oscuro.
+*/
+.header.scrolled {
+  background: rgba(14, 11, 20, 0.92);
+  backdrop-filter: blur(14px); /* Efecto de vidrio esmerilado */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  color: var(--texto-claro);
+  text-decoration: none;
+}
+
+.logo-emoji { font-size: 1.8rem; }
+
+/* Links del menú de navegación */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--texto-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color var(--transicion);
+}
+
+.nav-link:hover {
+  color: var(--acento);
+}
+
+/* El botón de WhatsApp en el nav */
+.nav-link.btn-whatsapp {
+  background: var(--verde-wa);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: background var(--transicion), transform var(--transicion);
+}
+
+.nav-link.btn-whatsapp:hover {
+  background: var(--verde-wa-hover);
+  transform: scale(1.05);
+  color: white;
+}
+
+
+/* ---- 5. MENÚ HAMBURGUESA ---- */
+/*
+  Solo visible en pantallas pequeñas (ver @media al final).
+  Las 3 <span> son las 3 líneas del ícono.
+*/
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 101;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2.5px;
+  background: var(--texto-claro);
+  border-radius: 3px;
+  transition: var(--transicion);
+}
+
+/* Animación: las 3 líneas se convierten en una X cuando el menú está abierto */
+.hamburger.activo span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.hamburger.activo span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.activo span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+
+/* ---- 6. SECCIÓN HERO ---- */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  /* En pantallas grandes: 2 columnas. En celular se aplica 1 columna (ver @media) */
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8rem 6% 4rem;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--acento-suave);
+  border: 1px solid rgba(240, 165, 0, 0.3);
+  color: var(--acento);
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  /* Animación de entrada: se desliza desde arriba */
+  animation: deslizarArriba 0.6s ease both;
+}
+
+.hero-titulo {
+  font-size: clamp(2.5rem, 6vw, 4.2rem); /* Tamaño fluido: crece con la pantalla */
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  /* animation-delay: empieza después del badge para efecto escalonado */
+  animation: deslizarArriba 0.6s 0.1s ease both;
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--texto-muted);
+  max-width: 480px;
+  margin-bottom: 2rem;
+  animation: deslizarArriba 0.6s 0.2s ease both;
+}
+
+.hero-botones {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  animation: deslizarArriba 0.6s 0.3s ease both;
+}
+
+
+/* --- BOTONES (reutilizables en toda la página) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 50px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transicion);
+}
+
+/* Botón amarillo principal */
+.btn-principal {
+  background: var(--acento);
+  color: #0e0b14;
+}
+.btn-principal:hover {
+  background: var(--acento-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(240, 165, 0, 0.35);
+}
+
+/* Botón de WhatsApp en el hero */
+.btn-whatsapp-hero {
+  background: transparent;
+  color: var(--texto-claro);
+  border: 2px solid var(--borde);
+}
+.btn-whatsapp-hero:hover {
+  border-color: var(--verde-wa);
+  color: var(--verde-wa);
+  transform: translateY(-3px);
+}
+
+
+/* Stats / Contadores en el hero */
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--borde);
+  animation: deslizarArriba 0.6s 0.4s ease both;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat strong {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--acento);
+  line-height: 1;
+}
+
+.stat span {
+  font-size: 0.8rem;
+  color: var(--texto-muted);
+  margin-top: 2px;
+}
+
+
+/* Lado derecho del hero: visual decorativa */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* El "blob": la forma orgánica de fondo */
+.hero-blob {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle at 40% 40%, var(--fondo-tarjeta), var(--fondo-medio));
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; /* Forma blob irregular */
+  border: 1px solid var(--borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulsarBlob 4s ease-in-out infinite; /* Respira suavemente */
+}
+
+.hero-emoji-grande {
+  font-size: 9rem;
+  animation: mecerse 3s ease-in-out infinite; /* Se mece de lado a lado */
+  display: block;
+}
+
+/* Emojis flotantes alrededor del blob */
+.flotante {
+  position: absolute;
+  font-size: 1.8rem;
+  animation: orbitar 4s ease-in-out infinite;
+}
+
+/* Posiciones de cada emoji flotante */
+.f1 { top: 10%;  right: 5%;  animation-delay: 0s; }
+.f2 { top: 5%;   left: 15%;  animation-delay: 0.7s; }
+.f3 { bottom: 10%; left: 5%; animation-delay: 1.4s; }
+.f4 { bottom: 5%;  right: 10%;animation-delay: 2.1s; }
+
+
+/* ---- 7. SECCIÓN PRODUCTOS ---- */
+.seccion {
+  padding: 6rem 6%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Secciones alternas tienen fondo diferente para separarlas visualmente */
+.productos-seccion {
+  background: var(--fondo-medio);
+}
+
+/* Encabezado de sección (reutilizable) */
+.seccion-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.seccion-tag {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--acento);
+  margin-bottom: 0.5rem;
+}
+
+.seccion-titulo {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
+
+.seccion-subtitulo {
+  color: var(--texto-muted);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/*
+  Grid de tarjetas de productos.
+  auto-fit + minmax: crea automáticamente las columnas necesarias.
+  Si hay espacio para 3 tarjetas → 3 columnas.
+  Si el espacio baja → 2 columnas → 1 columna (en celular).
+*/
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjeta individual de producto */
+.tarjeta {
+  background: var(--fondo-tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion);
+  cursor: default;
+  /* Clase "oculta" es la que JS quita para revelar con animación */
+  opacity: 1;
+}
+
+.tarjeta:hover {
+  transform: translateY(-8px);
+  border-color: var(--acento);
+  box-shadow: 0 16px 40px rgba(240, 165, 0, 0.15);
+}
+
+.tarjeta-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  /* Animación de rebote suave cuando el mouse está encima */
+  transition: transform var(--transicion);
+}
+
+.tarjeta:hover .tarjeta-emoji {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+.tarjeta h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta p {
+  font-size: 0.9rem;
+  color: var(--texto-muted);
+  margin-bottom: 1rem;
+}
+
+.tarjeta-precio {
+  display: inline-block;
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+}
+
+
+/* ---- 8. SECCIÓN NOSOTROS ---- */
+.nosotros-seccion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* Foto placeholder (donde va la imagen del negocio) */
+.nosotros-foto {
+  background: var(--fondo-tarjeta);
+  border: 2px dashed var(--borde);
+  border-radius: var(--radio);
+  aspect-ratio: 4/5;          /* Proporción de la foto (alto/ancho) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  color: var(--texto-muted);
+  font-size: 0.9rem;
+}
+
+.nosotros-emoji { font-size: 3rem; }
+
+/* Contenedor relativo para poner el badge flotante encima de la foto */
+.nosotros-visual { position: relative; }
+
+.nosotros-badge-flotante {
+  position: absolute;
+  bottom: -1rem; right: -1rem;
+  background: var(--acento);
+  color: #0e0b14;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radio);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: var(--sombra);
+}
+
+.nosotros-badge-flotante strong { display: block; }
+.nosotros-badge-flotante small { font-weight: 400; opacity: 0.7; }
+
+/* Párrafos de texto */
+.nosotros-parrafo {
+  color: var(--texto-muted);
+  margin-bottom: 1rem;
+}
+
+.nosotros-texto .seccion-titulo {
+  text-align: left;
+  margin: 0.5rem 0 1.5rem;
+}
+
+/* Grid de valores del negocio */
+.valores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.valor {
+  background: var(--fondo-tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: border-color var(--transicion);
+}
+
+.valor:hover { border-color: var(--acento); }
+.valor span  { font-size: 1.5rem; }
+.valor p     { margin: 0; }
+
+
+/* ---- 9. SECCIÓN CTA / CONTACTO ---- */
+.cta-seccion {
+  background: var(--fondo-medio);
+  text-align: center;
+}
+
+.cta-contenido {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-emoji { font-size: 4rem; margin-bottom: 1rem; }
+
+.cta-titulo {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.cta-desc {
+  color: var(--texto-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Botón grande de WhatsApp en la sección CTA */
+.btn-cta-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--verde-wa);
+  color: white;
+  padding: 1.1rem 2.5rem;
+  border-radius: 50px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transicion);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
+}
+
+.btn-cta-whatsapp:hover {
+  background: var(--verde-wa-hover);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-icon { font-size: 1.3rem; }
+
+/* Datos de contacto extras (dirección, horario, envíos) */
+.contacto-extras {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.contacto-extras span {
+  font-size: 0.85rem;
+  color: var(--texto-muted);
+}
+
+
+/* ---- 10. FOOTER ---- */
+.footer {
+  padding: 2.5rem 6%;
+  text-align: center;
+  border-top: 1px solid var(--borde);
+  color: var(--texto-muted);
+  font-size: 0.85rem;
+}
+
+.footer .logo-nombre {
+  font-family: var(--fuente-titulo);
+  color: var(--acento);
+}
+
+.footer-sub {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  opacity: 0.5;
+}
+
+
+/* ---- 11. BOTÓN SCROLL TOP ---- */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 48px; height: 48px;
+  background: var(--acento);
+  color: #0e0b14;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  /* Invisible por defecto; JS agrega .visible para mostrarlo */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all var(--transicion);
+  box-shadow: 0 4px 20px rgba(240, 165, 0, 0.4);
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.scroll-top:hover {
+  transform: translateY(-3px);
+  background: var(--acento-hover);
+}
+
+
+/* ---- 12. ANIMACIONES ---- */
+
+/* Los elementos con clase .reveal empiezan invisible y suben */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  /* La transición la activa JS al agregar la clase .visible */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animación de entrada: desliza desde abajo */
+@keyframes deslizarArriba {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* El blob respira / pulsa suavemente */
+@keyframes pulsarBlob {
+  0%, 100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+  50%       { border-radius: 40% 60% 45% 55% / 60% 40% 50% 50%; }
+}
+
+/* Emoji principal se mece de lado */
+@keyframes mecerse {
+  0%, 100% { transform: rotate(-5deg); }
+  50%       { transform: rotate(5deg); }
+}
+
+/* Emojis flotantes suben y bajan */
+@keyframes orbitar {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+
+/* ---- 13. RESPONSIVE (pantallas pequeñas) ---- */
+/*
+  @media (max-width: 768px) significa:
+  "Aplica estos estilos SOLO cuando la pantalla
+  sea de 768px o menos" (celulares y tablets pequeñas).
+*/
+@media (max-width: 768px) {
+
+  /* El menú se oculta y aparece desde el lado derecho */
+  .nav {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 70%;
+    height: 100vh;
+    background: var(--fondo-tarjeta);
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    transition: right var(--transicion);
+    z-index: 99;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.5);
+    padding: 2rem;
+  }
+
+  /* Cuando JS agrega la clase .abierto, desliza el menú hacia adentro */
+  .nav.abierto { right: 0; }
+
+  /* Muestra el botón hamburguesa */
+  .hamburger { display: flex; }
+
+  /* El hero pasa a una sola columna en celular */
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 7rem;
+    text-align: center;
+  }
+
+  /* El visual se muestra después del texto */
+  .hero-visual { order: -1; }
+
+  .hero-blob { width: 260px; height: 260px; }
+  .hero-emoji-grande { font-size: 6rem; }
+  .hero-desc { margin: 0 auto 2rem; }
+  .hero-botones { justify-content: center; }
+  .hero-stats { justify-content: center; }
+
+  /* Nosotros: de 2 columnas a 1 columna */
+  .nosotros-seccion {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  /* Ocultar el cursor personalizado en celular (no aplica) */
+  .cursor { display: none; }
+}
